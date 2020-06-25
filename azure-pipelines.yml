@@ -16,6 +16,7 @@ trigger:
     include:
       - master
       - demo
+      - staging
       - release/*
       - azure/*
       - refs/tags/*
