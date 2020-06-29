@@ -228,8 +228,10 @@ export function connectAugur(
       config.addresses,
       config.networkId
     );
+
     dispatch(updateCanHotload(true)); // Hotload now!
-    // End init here for Googlebot 
+
+    // End init here for Googlebot
     // TODO: Market list do something with hotload
     if(isGoogleBot()) {
       callback(null);
