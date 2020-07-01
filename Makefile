@@ -3,7 +3,7 @@
 all: build-ui
 
 ipfs-publish: ipfs-envvars build-typescript python-deps
-	$(PYTHON3) packages/augur-ui/support/dnslink-cloudflare.py -d augur.net -r _dnslink.v2-ipfs  -l $IPFS_HASH
+	python3 packages/augur-ui/support/dnslink-cloudflare.py -d augur.net -r _dnslink.v2-ipfs  -l $IPFS_HASH
 
 build-typescript: download-packages
 	yarn build
@@ -11,9 +11,11 @@ build-typescript: download-packages
 build-ui: build-typescript
 	yarn workspace @augurproject/ui build
 
-build-contracts: build-typescript python3
-	$(error TODO: contract building broken)
-	yarn workspace @augurproject/core build
+build-contracts: build-typescript venv
+	. venv/bin/activate; \
+	python3 -m pip install -r packages/augur-core/requirements.txt; \
+	yarn workspace @augurproject/core build:contracts; \
+	deactivate
 
 download-packages: yarn
 	yarn
@@ -25,20 +27,20 @@ clean:
 	yarn clean
 
 
-
 python-deps: venv requests
 
+# NOTE: not phony
 venv: python3 virtualenv
-	mkdir -p venv
-	python -m venv ./venv
+	python3 -m venv venv
 
 virtualenv: python3
 	python3 -m pip install virtualenv
 
 requests: venv
-	$(PYTHON3) -m pip install requests
+	. venv/bin/activate; \
+	python3 -m pip install requests
 
-PYTHON3 := ./venv/bin/python3
+
 
 
 PYTHON3_INSTALLED := $(shell python3 --version >/dev/null 2>&1; echo $$?)
