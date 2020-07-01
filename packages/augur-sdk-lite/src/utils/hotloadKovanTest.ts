@@ -6,6 +6,7 @@ import { NULL_ADDRESS } from '../constants';
 async function doWork(): Promise<void> {
     const provider = new ethers.providers.JsonRpcProvider("https://kovan.augur.net/ethereum-http");
     const addresses = {
+        "Universe": NULL_ADDRESS,
         "WarpSync": NULL_ADDRESS,
         "HotLoading": "0x208993149C873a2fCCD1c822E1300Fbb7189ede8",
         "Augur": "0x4045A51631181A63d4136b56e2C85552A2c87783",

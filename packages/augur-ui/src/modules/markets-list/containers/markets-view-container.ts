@@ -146,7 +146,7 @@ const mapDispatchToProps = (
       )
     ),
   hotLoadMarketList: async (cb) => {
-    const marketsInfo = await augurSdkLite.get().getMarketCreatedLogs('0x919274CE3Ba5a0D0f11071Bb9fb402AE5c23381B');
+    const marketsInfo = await augurSdkLite.get().getMarketCreatedLogs();
     dispatch(handleMarketsUpdatedLog({ marketsInfo }));
     cb(marketsInfo);
   }

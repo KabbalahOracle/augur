@@ -18,6 +18,7 @@ export interface CheckpointInterface {
 }
 
 export interface Addresses {
+  Universe: string;
   HotLoading: string;
   Augur: string;
   FillOrder: string;
@@ -71,11 +72,11 @@ export class AugurLite {
     });
   }
 
-  async getMarketCreatedLogs(universe: string) {
-    const { warpSyncHash } = await this.warpSync.getLastWarpSyncData(universe);
+  async getMarketCreatedLogs() {
+    const { warpSyncHash } = await this.warpSync.getLastWarpSyncData(this.addresses.Universe);
     const { logs } = await this.getIPFSFile(warpSyncHash);
 
-    const result = logs.filter((log) => log.name === 'MarketCreated').map(({extraInfo, ...rest }) => ({
+    return logs.filter((log) => log.name === 'MarketCreated').map(({extraInfo, ...rest }) => ({
       id: rest.market,
       categories: [],
       ...rest,
@@ -95,7 +96,5 @@ export class AugurLite {
       disputePacingOn: false,
       stakes: []
     }));
-
-    return result;
   }
 }

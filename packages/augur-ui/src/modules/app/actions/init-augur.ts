@@ -233,7 +233,7 @@ export function connectAugur(
 
     // End init here for Googlebot
     // TODO: Market list do something with hotload
-    if(isGoogleBot()) {
+    if(true) {
       callback(null);
       return;
     }
